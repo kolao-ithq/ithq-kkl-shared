@@ -1,0 +1,26 @@
+package entities
+
+type Bill struct {
+	InsertOnly
+	TicketID      string `gorm:"unique"`
+	TransactionID string `gorm:"index"`
+	LotID         uint   `gorm:"index"`
+	CreatedBy     uint   `gorm:"index"`
+	Amount        uint64
+	IsCoreSale    bool
+}
+
+type BillStatus struct {
+	InsertOnly
+	BillID uint `gorm:"index:idx_bill_status_bill_id"`
+	Status uint8
+}
+
+type BillDigit struct {
+	InsertOnly
+	BillID     uint `gorm:"index:idx_bill_digit_bill_id"`
+	DigitType  uint
+	DigitValue string
+	Amount     uint64
+	CoreAmount uint64
+}
