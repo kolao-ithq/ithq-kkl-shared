@@ -5,8 +5,10 @@ Shared Go package containing common entities and models used across ithq-kkl ser
 ## Installation
 
 ```bash
-go get github.com/kolao-ithq/ithq-kkl-shared
+go get github.com/kolao-ithq/ithq-kkl-shared@v0.1.0
 ```
+
+> Current version: **v0.1.0** — see [VERSION](./VERSION)
 
 ## Packages
 
@@ -43,6 +45,7 @@ bill := kkl_entities.Bill{
 billStatus := kkl_entities.BillStatus{
     BillID: 1,
     Status: 2,
+    Remark: "approved by admin",
 }
 
 billDigit := kkl_entities.BillDigit{
