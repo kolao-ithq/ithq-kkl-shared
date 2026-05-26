@@ -12,8 +12,9 @@ type Bill struct {
 
 type BillStatus struct {
 	InsertOnly
-	BillID uint `gorm:"index:idx_bill_status_bill_id"`
+	BillID uint   `gorm:"index:idx_bill_status_bill_id"`
 	Status uint8
+	Remark string
 }
 
 type BillDigit struct {
