@@ -8,11 +8,12 @@ type Bill struct {
 	CreatedBy     uint   `gorm:"index"`
 	Amount        uint64
 	IsCoreSale    bool
+	BillStatus    int8
 }
 
 type BillStatus struct {
 	InsertOnly
-	BillID uint   `gorm:"index:idx_bill_status_bill_id"`
+	BillID uint `gorm:"index:idx_bill_status_bill_id"`
 	Status uint8
 	Remark string
 }
