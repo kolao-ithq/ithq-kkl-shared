@@ -1,4 +1,4 @@
-package entities
+package kkl_entities
 
 type Bill struct {
 	InsertOnly

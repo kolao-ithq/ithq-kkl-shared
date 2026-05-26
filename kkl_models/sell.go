@@ -1,4 +1,4 @@
-package models
+package kkl_models
 
 import "time"
 
