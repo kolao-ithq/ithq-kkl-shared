@@ -10,6 +10,55 @@ go get github.com/kolao-ithq/ithq-kkl-shared@v0.1.0
 
 > Current version: **v0.1.0** — see [VERSION](./VERSION)
 
+## Private Repository Setup
+
+This is a private module. Before you can `go get` it, each developer/CI must configure Go and Git once.
+
+### 1. Tell Go to skip the public proxy for this module
+
+```bash
+go env -w GONOSUMCHECK=github.com/kolao-ithq/*
+go env -w GONOSUMDB=github.com/kolao-ithq/*
+go env -w GOPRIVATE=github.com/kolao-ithq/*
+```
+
+Or add to your shell profile (`~/.zshrc` / `~/.bashrc`):
+```bash
+export GOPRIVATE=github.com/kolao-ithq/*
+```
+
+### 2. Configure Git to authenticate with GitHub
+
+**Option A — SSH (recommended)**
+```bash
+git config --global url."git@github.com:".insteadOf "https://github.com/"
+```
+Make sure your SSH key is added to your GitHub account.
+
+**Option B — Personal Access Token (HTTPS)**
+```bash
+git config --global url."https://<YOUR_GITHUB_TOKEN>@github.com/".insteadOf "https://github.com/"
+```
+Replace `<YOUR_GITHUB_TOKEN>` with a token that has `repo` scope.
+
+### 3. Install the module
+
+```bash
+go get github.com/kolao-ithq/ithq-kkl-shared@v0.1.0
+```
+
+### CI/CD (GitHub Actions example)
+
+```yaml
+- name: Configure private module access
+  run: git config --global url."https://${{ secrets.GH_TOKEN }}@github.com/".insteadOf "https://github.com/"
+  env:
+    GONOSUMDB: "github.com/kolao-ithq/*"
+    GOPRIVATE: "github.com/kolao-ithq/*"
+```
+
+---
+
 ## Packages
 
 | Package | Description |
