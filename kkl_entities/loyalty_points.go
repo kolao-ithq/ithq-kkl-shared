@@ -4,20 +4,19 @@ import "gorm.io/gorm"
 
 type PointBalance struct {
 	gorm.Model
-	CustomerID    uint    `gorm:"uniqueIndex;not null"`
-	TotalEarned   float64 `gorm:"not null;default:0"`
-	TotalRedeemed float64 `gorm:"not null;default:0"`
-	Balance       float64 `gorm:"not null;default:0"`
+	CustomerID    uint  `gorm:"column:customer_id;uniqueIndex;not null"` // cross-service ref, no FK constraint
+	TotalEarned   int64 `gorm:"not null;default:0"`
+	TotalRedeemed int64 `gorm:"not null;default:0"`
+	Balance       int64 `gorm:"not null;default:0"`
 }
 
 type PointProgram struct {
 	gorm.Model
-	Name        string `gorm:"not null"`
+	Name        string `gorm:"type:varchar(255);not null"`
 	Description string `gorm:"type:text"`
 	IsActive    bool   `gorm:"not null;default:true"`
 }
 
-// TransactionType represents the kind of loyalty point transaction.
 type TransactionType string
 
 const (
@@ -26,7 +25,6 @@ const (
 	TransactionTypeReverse TransactionType = "REVERSE"
 )
 
-// TransactionStatus represents the lifecycle status of a transaction.
 type TransactionStatus string
 
 const (
@@ -34,15 +32,14 @@ const (
 	TransactionStatusReversed  TransactionStatus = "REVERSED"
 )
 
-// PointTransaction records every earn, redeem, and reverse event.
 type PointTransaction struct {
 	gorm.Model
-	CustomerID            uint              `gorm:"index;not null"`
-	ProgramID             *uint             `gorm:"index"`
-	TransactionType       TransactionType   `gorm:"type:varchar(10);not null"`
-	Points                float64           `gorm:"not null"` // positive for EARN, negative for REDEEM/REVERSE
-	ReferenceID           string            `gorm:"type:varchar(100);index"`
+	CustomerID            uint              `gorm:"column:customer_id;index;not null"`
+	ProgramID             *uint             `gorm:"column:program_id;uniqueIndex:idx_point_tx_ref_unique"`
+	TransactionType       TransactionType   `gorm:"type:varchar(20);not null;uniqueIndex:idx_point_tx_ref_unique"`
+	Points                int64             `gorm:"not null"`
+	ReferenceID           string            `gorm:"type:varchar(100);uniqueIndex:idx_point_tx_ref_unique"`
 	Description           string            `gorm:"type:text"`
-	Status                TransactionStatus `gorm:"type:varchar(10);not null;default:'COMPLETED'"`
-	ReversedTransactionID *uint             `gorm:"index"` // points to the original tx when type=REVERSE
+	Status                TransactionStatus `gorm:"type:varchar(20);not null;default:'COMPLETED'"`
+	ReversedTransactionID *uint             `gorm:"column:reversed_transaction_id;index"`
 }

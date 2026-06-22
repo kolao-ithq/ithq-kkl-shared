@@ -4,9 +4,8 @@ import "gorm.io/gorm"
 
 type Payment struct {
 	InsertOnly
-	BillID                uint `gorm:"uniqueIndex"`
-	BankReference         string
-	PaymentMethodID       uint `gorm:"index:idx_payment_method_id"`
+	BillID                uint64 `gorm:"uniqueIndex"`
+	PaymentMethodID       uint   `gorm:"index:idx_payment_method_id"`
 	PaymentMethod         PaymentMethod
 	Amount                uint64
 	Discount              uint64
@@ -15,6 +14,7 @@ type Payment struct {
 	AccountType           string
 	BankAccountNumber     string
 	CurrentCommissionRate float64
+	PointTransactionID    uint
 }
 
 type PaymentMethod struct {
