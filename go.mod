@@ -1,4 +1,4 @@
-module github.com/kolao-ithq/ithq-kkl-shared
+module github.com/kolao-ithq/ithq-kkl-shared/v2
 
 go 1.24
 
