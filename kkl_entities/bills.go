@@ -27,6 +27,7 @@ type BillStatus struct {
 
 type BillDigit struct {
 	InsertOnly
+	LotID         string `gorm:"type:varchar(25)"`
 	BillID        uint64 `gorm:"index:idx_bill_digit_lookup,priority:1"`
 	DigitType     uint   `gorm:"index:idx_bill_digit_lookup,priority:2"`
 	DigitValue    string `gorm:"index:idx_bill_digit_lookup,priority:3"`

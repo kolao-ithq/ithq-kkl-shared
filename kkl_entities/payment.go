@@ -15,6 +15,7 @@ type Payment struct {
 	BankAccountNumber     string
 	CurrentCommissionRate float64
 	PointTransactionID    uint
+	LotID         string    `gorm:"type:varchar(25)"`
 }
 
 type PaymentMethod struct {
